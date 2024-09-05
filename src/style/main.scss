@@ -1,0 +1,21 @@
+html,
+body,
+#app {
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  // font-family: 'Noto Serif TC', serif;
+
+  font-family:
+      'Noto Serif TC',
+      system, -apple-system, BlinkMacSystemFont,
+      "PingFang SC", "Segoe UI", "Microsoft YaHei", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+      "Helvetica Neue", Helvetica, Arial, 微軟正黑體, "Microsoft JhengHei", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smooth: always;
+  font-weight: 400;
+  font-size: 0.8375rem;
+  color: var(--el-text-color-regular);
+}
