@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './style/reset.css'
 import './App.css'
 import useGoogleApi from './hooks/useGoogleAPI'

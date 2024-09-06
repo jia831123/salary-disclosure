@@ -50,28 +50,28 @@ export default React.memo(function DataTable({ data }: { data: SalaryData[] }) {
       width: 150,
       sorter: true,
       render: (_, { rank }) => {
-        const config = {
-          frontend: {
-            text: 'frontend',
-            color: 'blue',
-            keyWord: ['frontend', '前端'],
-          },
-          backend: {
-            text: 'backend',
-            color: 'orange',
-            keyWord: ['backend', '後端'],
-          },
-          fullStack: {
-            text: 'backend',
-            color: 'orange',
-            keyWord: ['fullStack', '全端', 'full-stack'],
-          },
-          engineer: {
-            text: 'backend',
-            color: 'orange',
-            keyWord: ['engineer', '軟體工程師'],
-          },
-        }
+        // const config = {
+        //   frontend: {
+        //     text: 'frontend',
+        //     color: 'blue',
+        //     keyWord: ['frontend', '前端'],
+        //   },
+        //   backend: {
+        //     text: 'backend',
+        //     color: 'orange',
+        //     keyWord: ['backend', '後端'],
+        //   },
+        //   fullStack: {
+        //     text: 'backend',
+        //     color: 'orange',
+        //     keyWord: ['fullStack', '全端', 'full-stack'],
+        //   },
+        //   engineer: {
+        //     text: 'backend',
+        //     color: 'orange',
+        //     keyWord: ['engineer', '軟體工程師'],
+        //   },
+        // }
         let name =
           rank.includes('前端') || rank.includes('frontend')
             ? 'frontend'
