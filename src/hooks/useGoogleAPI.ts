@@ -50,7 +50,6 @@ export const useGoogleApi = () => {
   const getDataFromGoogleSheets = async (): Promise<FourteenStringsArray[]> => {
     if (!gapi) {
       console.warn(`gapi not found`)
-      console.log('test')
       return []
     }
     try {
@@ -93,8 +92,8 @@ export const useGoogleApi = () => {
     const keys = [
       'timeState',
       'companyName',
-      'position',
       'rank',
+      'position',
       'relateJobExperience',
       'currentJobExperience',
       'salary',

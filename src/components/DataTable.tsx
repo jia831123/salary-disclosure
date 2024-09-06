@@ -1,26 +1,31 @@
-import { Table } from 'antd'
 import type { TableProps } from 'antd'
 import { SalaryData } from '../hooks/useGoogleAPI'
+import { FloatButton, Skeleton } from 'antd'
+import { Table, Tag } from 'antd'
+import { useMemo } from 'react'
+import { useDataTransfer } from '../hooks/useDataTransfer'
+import React from 'react'
 
-export function DataTable({ data }: { data: SalaryData[] }) {
-  interface DataType {
-    timeState: string
-    companyName: string
-    position: string
-    rank: string
-    relateJobExperience: string
-    currentJobExperience: string
-    salary: string
-    bonus: string
-    allSalary: string
-    averageTimePeerDay: string
-    overTimeEveryMonth: string
-    overtimeFrequency: string
-    happy: string
-    loading: string
-    other: string
-  }
+interface DataType {
+  timeState: string
+  companyName: string
+  position: string
+  rank: string
+  relateJobExperience: string
+  currentJobExperience: string
+  salary: string
+  bonus: string
+  allSalary: string
+  averageTimePeerDay: string
+  overTimeEveryMonth: string
+  overtimeFrequency: string
+  happy: string
+  loading: string
+  other: string
+}
 
+export default React.memo(function DataTable({ data }: { data: SalaryData[] }) {
+  const dataForTransfer = useMemo(() => useDataTransfer(data), [data])
   const columns: TableProps<DataType>['columns'] = [
     {
       title: '時間戳記',
@@ -42,14 +47,51 @@ export function DataTable({ data }: { data: SalaryData[] }) {
       title: '職務',
       dataIndex: 'rank',
       key: 'rank',
-      width: 100,
+      width: 150,
       sorter: true,
+      render: (_, { rank }) => {
+        const config = {
+          frontend: {
+            text: 'frontend',
+            color: 'blue',
+            keyWord: ['frontend', '前端'],
+          },
+          backend: {
+            text: 'backend',
+            color: 'orange',
+            keyWord: ['backend', '後端'],
+          },
+          fullStack: {
+            text: 'backend',
+            color: 'orange',
+            keyWord: ['fullStack', '全端', 'full-stack'],
+          },
+          engineer: {
+            text: 'backend',
+            color: 'orange',
+            keyWord: ['engineer', '軟體工程師'],
+          },
+        }
+        let name =
+          rank.includes('前端') || rank.includes('frontend')
+            ? 'frontend'
+            : rank.includes('後端') || rank.includes('backend')
+            ? 'backend'
+            : rank
+        let color =
+          rank.includes('前端') || rank.includes('frontend')
+            ? 'blue'
+            : rank.includes('後端') || rank.includes('backend')
+            ? 'yellow'
+            : 'gray'
+        return <>{<Tag color={color}>{name}</Tag>}</>
+      },
     },
     {
       title: '職級',
       dataIndex: 'position',
       key: 'position',
-      width: 100,
+      width: 150,
     },
     {
       title: '相關年資',
@@ -128,15 +170,27 @@ export function DataTable({ data }: { data: SalaryData[] }) {
       width: 300,
     },
   ]
-
-  return (
-    <Table
-      className="h-full w-full overflow-auto"
-      columns={columns}
-      dataSource={data}
-      rowKey={'index'}
-      pagination={false}
-      scroll={{ x: 1500, y: 1000 }}
-    />
+  console.log('Table Render')
+  return data?.length ? (
+    <>
+      <Table
+        className="w-full overflow-auto"
+        columns={columns}
+        dataSource={dataForTransfer}
+        rowKey={'index'}
+        pagination={false}
+        scroll={{ x: 1500, y: '80vh' }}
+      />
+      <FloatButton.BackTop visibilityHeight={0} />
+    </>
+  ) : (
+    <div className="flex flex-col gap-3">
+      <Skeleton active />
+      <Skeleton active />
+      <Skeleton active />
+      <Skeleton active />
+      <Skeleton active />
+      <Skeleton active />
+    </div>
   )
-}
+})

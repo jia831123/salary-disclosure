@@ -14,5 +14,8 @@ module.exports = {
       pinyon: ['Pinyon Script'],
     },
   },
+  corePlugins: {
+    preflight: false,
+  },
   plugins: [],
 }

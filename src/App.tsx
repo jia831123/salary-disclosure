@@ -1,20 +1,24 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import './style/reset.css'
 import './App.css'
 import useGoogleApi from './hooks/useGoogleAPI'
-import './style/reset.css'
-import { DataTable } from './components/DataTable'
-import { Flex, Layout } from 'antd'
+import DataTable from './components/DataTable'
+import { Layout } from 'antd'
+import { DataTabs } from './components/DataTabs'
+import { useConfigService } from './server/localStorage/useConfigService'
+import { useDataMemo } from './hooks/useDataMemo'
 
 const App = () => {
-  const { Header, Footer, Sider, Content } = Layout
+  const { Header, Sider, Content } = Layout
 
   const { getDataFromGoogleSheets, init, transformDataToJson } = useGoogleApi()
   const [data, setData] = useState<any>()
+  const { configs, setConfigs: updateConfigs } = useConfigService()
+  const { dataMemo } = useDataMemo(data, configs, 0)
   useEffect(() => {
     init().then(async () => {
       const data = await getDataFromGoogleSheets().then((data) => transformDataToJson(data))
       setData(data)
-      console.log(data)
     })
   }, [])
   const headerStyle: React.CSSProperties = {
@@ -28,17 +32,13 @@ const App = () => {
 
   const contentStyle: React.CSSProperties = {
     textAlign: 'center',
-    minHeight: 120,
-    lineHeight: '120px',
-    color: '#fff',
-    backgroundColor: '#0958d9',
   }
 
   const siderStyle: React.CSSProperties = {
     textAlign: 'center',
     lineHeight: '120px',
     color: '#fff',
-    backgroundColor: '#1677ff',
+    backgroundColor: 'rgb(255, 255, 255)',
   }
 
   const layoutStyle = {
@@ -46,16 +46,25 @@ const App = () => {
     overflow: 'hidden',
     width: 'calc(100%)',
     maxWidth: 'calc(100%)',
+    height: 'calc(100vh-64px)',
   }
   return (
     <>
-      <Header style={headerStyle}>純軟薪水分享</Header>
+      <Header style={headerStyle}>
+        純軟薪水分享 好用版{' '}
+        <a
+          target="_blank"
+          href="https://docs.google.com/spreadsheets/d/1GMYKVBxRlMv6oNVNzpXYoLUSyT8ZnLEjGcRbn0b4KsA/edit?gid=788239997#gid=788239997"
+        >
+          (資料來源)
+        </a>
+      </Header>
       <Layout style={layoutStyle}>
         <Sider width="25%" style={siderStyle}>
-          Sider
+          <DataTabs configs={configs} updateConfigs={updateConfigs}></DataTabs>
         </Sider>
         <Content style={contentStyle}>
-          <DataTable data={data}></DataTable>
+          <DataTable data={dataMemo}></DataTable>
         </Content>
       </Layout>
     </>

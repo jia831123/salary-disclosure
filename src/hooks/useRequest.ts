@@ -49,7 +49,6 @@ export const useRequest = async <R extends object, B extends object = object>({
   }
 
   // if (res.data.success === false) {
-  //   console.log(res.data);
   //   throw Error(res.data?.message || "错误发生");
   // }
   return res.data
