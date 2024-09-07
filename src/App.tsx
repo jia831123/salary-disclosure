@@ -46,7 +46,7 @@ const App = () => {
     overflow: 'hidden',
     width: 'calc(100%)',
     maxWidth: 'calc(100%)',
-    height: 'calc(100%-64px)',
+    height: 'calc(100% - 64px)',
   }
   return (
     <>

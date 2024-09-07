@@ -1,6 +1,5 @@
 import type { TableProps } from 'antd'
 import { SalaryData } from '../hooks/useGoogleAPI'
-import { Skeleton } from 'antd'
 import { Table, Tag } from 'antd'
 import { useMemo, useRef } from 'react'
 import { useDataTransfer } from '../hooks/useDataTransfer'
@@ -177,26 +176,16 @@ export default React.memo(function DataTable({ data, dataLoading }: { data: Sala
     },
   ]
   console.log('Table Render')
-  return dataLoading ? (
-    <div className="flex flex-col gap-3">
-      <Skeleton active />
-      <Skeleton active />
-      <Skeleton active />
-      <Skeleton active />
-      <Skeleton active />
-      <Skeleton active />
-    </div>
-  ) : (
-    <>
-      <Table
-        ref={tableRef}
-        className="w-full overflow-auto"
-        columns={columns}
-        dataSource={dataForTransfer}
-        rowKey={'index'}
-        pagination={false}
-        scroll={{ x: 1500, y: '80vh' }}
-      />
-    </>
+  return (
+    <Table
+      ref={tableRef}
+      loading={dataLoading}
+      className="w-full h-full overflow-auto"
+      columns={columns}
+      dataSource={dataForTransfer}
+      rowKey={'index'}
+      pagination={false}
+      scroll={{ x: 1500, y: '80vh' }}
+    />
   )
 })
