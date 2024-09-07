@@ -1,10 +1,11 @@
 import type { TableProps } from 'antd'
 import { SalaryData } from '../hooks/useGoogleAPI'
-import { FloatButton, Skeleton } from 'antd'
+import { Skeleton } from 'antd'
 import { Table, Tag } from 'antd'
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
 import { useDataTransfer } from '../hooks/useDataTransfer'
 import React from 'react'
+import { convertToDateFormat } from '../uitls'
 
 interface DataType {
   timeState: string
@@ -24,8 +25,9 @@ interface DataType {
   other: string
 }
 
-export default React.memo(function DataTable({ data }: { data: SalaryData[] }) {
+export default React.memo(function DataTable({ data, dataLoading }: { data: SalaryData[]; dataLoading?: boolean }) {
   const dataForTransfer = useMemo(() => useDataTransfer(data), [data])
+  const tableRef = useRef<any>(null)
   const columns: TableProps<DataType>['columns'] = [
     {
       title: '時間戳記',
@@ -33,7 +35,11 @@ export default React.memo(function DataTable({ data }: { data: SalaryData[] }) {
       key: 'timeState',
       width: 120,
       fixed: 'left',
-      sorter: true,
+      sorter: (a, b) => {
+        let aTimeStr = a.timeState ? convertToDateFormat(a.timeState) : '0'
+        let bTimeStr = b.timeState ? convertToDateFormat(b.timeState) : '0'
+        return new Date(aTimeStr).getTime() - new Date(bTimeStr).getTime()
+      },
     },
     {
       title: '公司名稱',
@@ -171,19 +177,7 @@ export default React.memo(function DataTable({ data }: { data: SalaryData[] }) {
     },
   ]
   console.log('Table Render')
-  return data?.length ? (
-    <>
-      <Table
-        className="w-full overflow-auto"
-        columns={columns}
-        dataSource={dataForTransfer}
-        rowKey={'index'}
-        pagination={false}
-        scroll={{ x: 1500, y: '80vh' }}
-      />
-      <FloatButton.BackTop visibilityHeight={0} />
-    </>
-  ) : (
+  return dataLoading ? (
     <div className="flex flex-col gap-3">
       <Skeleton active />
       <Skeleton active />
@@ -192,5 +186,17 @@ export default React.memo(function DataTable({ data }: { data: SalaryData[] }) {
       <Skeleton active />
       <Skeleton active />
     </div>
+  ) : (
+    <>
+      <Table
+        ref={tableRef}
+        className="w-full overflow-auto"
+        columns={columns}
+        dataSource={dataForTransfer}
+        rowKey={'index'}
+        pagination={false}
+        scroll={{ x: 1500, y: '80vh' }}
+      />
+    </>
   )
 })

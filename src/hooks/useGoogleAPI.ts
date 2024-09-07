@@ -26,6 +26,7 @@ type FourteenStringsArray = FixedLengthArray<string, 15>
 export const useGoogleApi = () => {
   const SHEETS_ID = '1GMYKVBxRlMv6oNVNzpXYoLUSyT8ZnLEjGcRbn0b4KsA'
   const TABLED_NAME = '表單回應 1'
+  const [isLoading, setLoading] = useState(false)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [gapi] = useState(window['gapi'])
@@ -48,6 +49,7 @@ export const useGoogleApi = () => {
     })
 
   const getDataFromGoogleSheets = async (): Promise<FourteenStringsArray[]> => {
+    setLoading(true)
     if (!gapi) {
       console.warn(`gapi not found`)
       return []
@@ -62,6 +64,8 @@ export const useGoogleApi = () => {
     } catch (error) {
       console.error(error)
       return []
+    } finally {
+      setLoading(false)
     }
   }
   // const getDataById = async (
@@ -145,6 +149,6 @@ export const useGoogleApi = () => {
       return result
     })
   }
-  return { gapi, getDataFromGoogleSheets, init, transformDataToJson }
+  return { gapi, getDataFromGoogleSheets, init, transformDataToJson, isLoading }
 }
 export default useGoogleApi

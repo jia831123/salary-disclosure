@@ -21,7 +21,7 @@ export function useDataMemo(data: SalaryData[], configs: FilterConfig[], index: 
     return data.filter((item) => {
       // 遍歷每個 filterConfig 屬性，根據 state 和 condition 決定是否過濾
       if (config.componyName.state) {
-        if (!item.companyName.includes(config.componyName.value)) return false
+        if (!item.companyName.toUpperCase().includes(config.componyName.value.toUpperCase())) return false
       }
 
       if (config.allSalary.state) {
@@ -37,11 +37,12 @@ export function useDataMemo(data: SalaryData[], configs: FilterConfig[], index: 
       }
 
       if (config.rank.state) {
-        if (!item.rank.includes(config.rank.value)) return false
+        debugger
+        if (!item.rank.toUpperCase().includes(config.rank.value.toUpperCase())) return false
       }
 
       if (config.position.state) {
-        if (!item.position.includes(config.position.value)) return false
+        if (!item.position.toUpperCase().includes(config.position.value.toUpperCase())) return false
       }
 
       if (config.happy.state) {

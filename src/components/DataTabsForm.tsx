@@ -1,5 +1,4 @@
-import { Button, Flex, Form, Input, InputNumber, Select, Switch } from 'antd'
-import { SaveOutlined } from '@ant-design/icons'
+import { Flex, Form, Input, InputNumber, Select, Switch } from 'antd'
 import { FilterConfig } from '../type'
 
 export function DataTabsForm({
@@ -62,12 +61,12 @@ export function DataTabsForm({
             }
           />
           <Switch
-            value={config?.position.state}
+            value={config?.rank.state}
             onChange={(state) =>
               updateConfig({
                 ...config,
-                position: {
-                  ...config.position,
+                rank: {
+                  ...config.rank,
                   state,
                 },
               })
@@ -93,14 +92,14 @@ export function DataTabsForm({
             }
           />
           <Switch
-            value={config?.rank.state}
+            value={config?.position.state}
             checkedChildren="開啟"
             unCheckedChildren="關閉"
             onChange={(state) =>
               updateConfig({
                 ...config,
-                rank: {
-                  ...config.rank,
+                position: {
+                  ...config.position,
                   state,
                 },
               })
@@ -321,6 +320,8 @@ export function DataTabsForm({
             ></Select>
             <InputNumber
               value={config?.happy.value}
+              max={5}
+              min={0}
               onChange={(e) =>
                 updateConfig({
                   ...config,
@@ -333,6 +334,7 @@ export function DataTabsForm({
             ></InputNumber>
           </Flex>
           <Switch
+            value={config.happy.state}
             onChange={(e) =>
               updateConfig({
                 ...config,
@@ -380,6 +382,8 @@ export function DataTabsForm({
             ></Select>
             <InputNumber
               value={config?.loading.value}
+              max={5}
+              min={0}
               onChange={(e) =>
                 updateConfig({
                   ...config,
@@ -408,11 +412,6 @@ export function DataTabsForm({
           />
         </Flex>
       </Form.Item>
-      <Flex gap="middle" vertical={false}>
-        <Button type="primary" shape="round" icon={<SaveOutlined />}>
-          Save
-        </Button>
-      </Flex>
     </Form>
   )
 }

@@ -11,7 +11,7 @@ import { useDataMemo } from './hooks/useDataMemo'
 const App = () => {
   const { Header, Sider, Content } = Layout
 
-  const { getDataFromGoogleSheets, init, transformDataToJson } = useGoogleApi()
+  const { getDataFromGoogleSheets, init, transformDataToJson, isLoading } = useGoogleApi()
   const [data, setData] = useState<any>()
   const { configs, setConfigs: updateConfigs } = useConfigService()
   const { dataMemo } = useDataMemo(data, configs, 0)
@@ -46,7 +46,7 @@ const App = () => {
     overflow: 'hidden',
     width: 'calc(100%)',
     maxWidth: 'calc(100%)',
-    height: 'calc(100vh-64px)',
+    height: 'calc(100%-64px)',
   }
   return (
     <>
@@ -64,7 +64,7 @@ const App = () => {
           <DataTabs configs={configs} updateConfigs={updateConfigs}></DataTabs>
         </Sider>
         <Content style={contentStyle}>
-          <DataTable data={dataMemo}></DataTable>
+          <DataTable data={dataMemo} dataLoading={isLoading}></DataTable>
         </Content>
       </Layout>
     </>
