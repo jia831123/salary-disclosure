@@ -33,3 +33,6 @@ export function convertToDateFormat(dateStr: string): string {
   ).padStart(2, '0')}:${minute}:${second}`
   return formattedDate
 }
+export function get104Href(keyword: string) {
+  return `https://www.104.com.tw/company/search/?jobsource=cs_n104bank2&keyword=${keyword}`
+}

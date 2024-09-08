@@ -68,29 +68,7 @@ export const useGoogleApi = () => {
       setLoading(false)
     }
   }
-  // const getDataById = async (
-  //   id: string,
-  // ): Promise<
-  //   | {
-  //       name: string
-  //       text: string
-  //     }
-  //   | undefined
-  // > => {
-  //   const datas = await getDataFromGoogleSheets()
-  //   if (!datas) {
-  //     console.warn('get datas error')
-  //     return undefined
-  //   }
-  //   const data = datas.find((each) => each.includes(id))
-  //   if (data) {
-  //     return {
-  //       name: data[1] || '親愛的朋友',
-  //       text: data[2] || '誠摯的歡迎您前來',
-  //     }
-  //   }
-  //   return undefined
-  // }
+
   const transformDataToJson = (data: FourteenStringsArray[]) => {
     if (!data.length) return
     const keys = [

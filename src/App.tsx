@@ -3,10 +3,12 @@ import './style/reset.css'
 import './App.css'
 import useGoogleApi from './hooks/useGoogleAPI'
 import DataTable from './components/DataTable'
-import { Layout } from 'antd'
+import { Button, Drawer, Flex, Layout } from 'antd'
 import { DataTabs } from './components/DataTabs'
 import { useConfigService } from './server/localStorage/useConfigService'
 import { useDataMemo } from './hooks/useDataMemo'
+import { useMediaQuery } from './hooks/useMediaQuery'
+import { AlignCenterOutlined } from '@ant-design/icons'
 
 const App = () => {
   const { Header, Sider, Content } = Layout
@@ -15,6 +17,8 @@ const App = () => {
   const [data, setData] = useState<any>()
   const { configs, setConfigs: updateConfigs } = useConfigService()
   const { dataMemo } = useDataMemo(data, configs, 0)
+  const [isShowDrawer, setShowDrawer] = useState(false)
+  const md = useMediaQuery('(min-width: 1024px)')
   useEffect(() => {
     init().then(async () => {
       const data = await getDataFromGoogleSheets().then((data) => transformDataToJson(data))
@@ -25,9 +29,8 @@ const App = () => {
     textAlign: 'center',
     color: '#fff',
     height: 64,
-    paddingInline: 48,
-    lineHeight: '64px',
     backgroundColor: '#4096ff',
+    padding: '0px',
   }
 
   const contentStyle: React.CSSProperties = {
@@ -51,22 +54,34 @@ const App = () => {
   return (
     <>
       <Header style={headerStyle}>
-        純軟薪水分享 好用版{' '}
-        <a
-          target="_blank"
-          href="https://docs.google.com/spreadsheets/d/1GMYKVBxRlMv6oNVNzpXYoLUSyT8ZnLEjGcRbn0b4KsA/edit?gid=788239997#gid=788239997"
-        >
-          (資料來源)
-        </a>
+        <Flex align="center" gap={'3rem'}>
+          {!md && (
+            <Button className="m-1" onClick={() => setShowDrawer(true)} ghost icon={<AlignCenterOutlined />}></Button>
+          )}
+          <div className="grow">
+            純軟薪水分享 加強版
+            <a
+              target="_blank"
+              href="https://docs.google.com/spreadsheets/d/1GMYKVBxRlMv6oNVNzpXYoLUSyT8ZnLEjGcRbn0b4KsA/edit?gid=788239997#gid=788239997"
+            >
+              (資料來源)
+            </a>
+          </div>
+        </Flex>
       </Header>
       <Layout style={layoutStyle}>
-        <Sider width="25%" style={siderStyle}>
-          <DataTabs configs={configs} updateConfigs={updateConfigs}></DataTabs>
-        </Sider>
+        {md && (
+          <Sider width="25%" style={siderStyle}>
+            <DataTabs configs={configs} updateConfigs={updateConfigs}></DataTabs>
+          </Sider>
+        )}
         <Content style={contentStyle}>
-          <DataTable data={dataMemo} dataLoading={isLoading}></DataTable>
+          <DataTable data={dataMemo} dataLoading={isLoading} config={configs[0]}></DataTable>
         </Content>
       </Layout>
+      <Drawer placement="left" onClose={() => setShowDrawer(false)} open={isShowDrawer}>
+        <DataTabs configs={configs} updateConfigs={updateConfigs}></DataTabs>
+      </Drawer>
     </>
   )
 }

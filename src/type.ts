@@ -40,4 +40,5 @@ export interface FilterConfig {
     condition: 'equal' | 'less' | 'greater'
     state: boolean
   }
+  cols: string[]
 }

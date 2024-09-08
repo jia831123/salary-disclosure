@@ -20,7 +20,7 @@ export function useDataTransfer(data: SalaryData[]) {
 }
 export function getDefaultFilterConfig(): FilterConfig {
   return {
-    name: 'default',
+    name: 'Filter',
     componyName: {
       value: '',
       condition: 'include',
@@ -49,5 +49,21 @@ export function getDefaultFilterConfig(): FilterConfig {
     bonus: { value: 0, condition: 'equal', state: false },
     happy: { value: 0, condition: 'equal', state: false },
     loading: { value: 0, condition: 'equal', state: false },
+    cols: [
+      'rank,position',
+      'relateJobExperience',
+      'currentJobExperience',
+      'salary',
+      'bonus',
+      'allSalary',
+      'happy',
+      'loading',
+      'averageTimePeerDay',
+      'overTimeEveryMonth',
+      'overtimeFrequency',
+      'other',
+      'rank',
+      'position',
+    ],
   }
 }

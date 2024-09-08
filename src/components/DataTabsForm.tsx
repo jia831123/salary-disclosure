@@ -8,6 +8,61 @@ export function DataTabsForm({
   config: FilterConfig
   updateConfig: (data: FilterConfig) => void
 }) {
+  const options = [
+    {
+      label: '職務',
+      value: 'rank',
+    },
+    {
+      label: '職級',
+      value: 'position',
+    },
+    {
+      label: '相關年資',
+      value: 'relateJobExperience',
+    },
+    {
+      label: '現職年資',
+      value: 'currentJobExperience',
+    },
+    {
+      label: '月(底)薪',
+      value: 'salary',
+    },
+    {
+      label: 'Bonus',
+      value: 'bonus',
+    },
+    {
+      label: '總年薪',
+      value: 'allSalary',
+    },
+
+    {
+      label: '爽度',
+      value: 'happy',
+    },
+    {
+      label: 'Loading',
+      value: 'loading',
+    },
+    {
+      label: '平均每日工時',
+      value: 'averageTimePeerDay',
+    },
+    {
+      label: '每月加班',
+      value: 'overTimeEveryMonth',
+    },
+    {
+      label: '加班頻率',
+      value: 'overtimeFrequency',
+    },
+    {
+      label: '心得',
+      value: 'other',
+    },
+  ]
   return (
     <Form
       className="p-3"
@@ -16,6 +71,22 @@ export function DataTabsForm({
       layout="horizontal"
       style={{ maxWidth: 600 }}
     >
+      <Form.Item label="cols">
+        <Flex gap="middle" vertical={false}>
+          <Select
+            maxTagCount="responsive"
+            mode="multiple"
+            options={options}
+            value={config.cols}
+            onChange={(e) =>
+              updateConfig({
+                ...config,
+                cols: e,
+              })
+            }
+          ></Select>
+        </Flex>
+      </Form.Item>
       <Form.Item label="公司">
         <Flex gap="middle" vertical={false}>
           <Input
@@ -46,6 +117,7 @@ export function DataTabsForm({
           />
         </Flex>
       </Form.Item>
+
       <Form.Item label="職務">
         <Flex gap="middle" vertical={false}>
           <Input
