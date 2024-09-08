@@ -72,28 +72,6 @@ export default React.memo(function DataTable({
         width: 200,
         sorter: true,
         render: (_, { rank }) => {
-          // const config = {
-          //   frontend: {
-          //     text: 'frontend',
-          //     color: 'blue',
-          //     keyWord: ['frontend', '前端'],
-          //   },
-          //   backend: {
-          //     text: 'backend',
-          //     color: 'orange',
-          //     keyWord: ['backend', '後端'],
-          //   },
-          //   fullStack: {
-          //     text: 'backend',
-          //     color: 'orange',
-          //     keyWord: ['fullStack', '全端', 'full-stack'],
-          //   },
-          //   engineer: {
-          //     text: 'backend',
-          //     color: 'orange',
-          //     keyWord: ['engineer', '軟體工程師'],
-          //   },
-          // }
           let name =
             rank.includes('前端') || rank.includes('frontend')
               ? 'frontend'
@@ -208,13 +186,14 @@ export default React.memo(function DataTable({
   return (
     <Table
       ref={tableRef}
+      virtual
       loading={dataLoading}
       className="w-full h-full overflow-auto"
       columns={columns}
       dataSource={dataForTransfer}
       rowKey={'index'}
       pagination={false}
-      scroll={{ x: 1500, y: '80vh' }}
+      scroll={{ x: 1500, y: 600 }}
     />
   )
 })
