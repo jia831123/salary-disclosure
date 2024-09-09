@@ -1,11 +1,12 @@
 import type { TableProps } from 'antd'
 import { SalaryData } from '../hooks/useGoogleAPI'
 import { Table, Tag } from 'antd'
-import { useMemo, useRef } from 'react'
+import { useContext, useMemo, useRef } from 'react'
 import { useDataTransfer } from '../hooks/useDataTransfer'
 import React from 'react'
 import { convertToDateFormat, get104Href } from '../uitls'
 import { FilterConfig } from '../type'
+import { MdContext } from '../App'
 
 interface DataType {
   timeState: string
@@ -34,6 +35,7 @@ export default React.memo(function DataTable({
   config: FilterConfig
   dataLoading?: boolean
 }) {
+  const md = useContext(MdContext)
   const dataForTransfer = useMemo(() => useDataTransfer(data), [data])
   const tableRef = useRef<any>(null)
   const columns = useMemo<TableProps<DataType>['columns']>(() => {
@@ -57,6 +59,7 @@ export default React.memo(function DataTable({
         width: 120,
         fixed: 'left',
         sorter: true,
+        className: 'bg-red',
         render: (_, { companyName }) => {
           return (
             <a href={get104Href(companyName)} target="_blank">
@@ -178,15 +181,18 @@ export default React.memo(function DataTable({
         width: 300,
       },
     ]
-    return originData.filter((each) => {
-      return config.cols.concat(['companyName', 'timeState']).includes(each.key as string)
-    })
+    return originData
+      .filter((each) => {
+        return config.cols.concat(['companyName', 'timeState']).includes(each.key as string)
+      })
+      .filter((e) => !md && e.key !== 'timeState')
   }, [config])
   console.log('Table Render')
   return (
     <Table
       ref={tableRef}
       virtual
+      bordered
       loading={dataLoading}
       className="w-full h-full overflow-auto"
       columns={columns}
