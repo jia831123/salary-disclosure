@@ -119,7 +119,7 @@ export default React.memo(function DataTable({
         dataIndex: 'bonus',
         key: 'bonus',
         width: 150,
-        sorter: true,
+        sorter: (a, b) => Number(a.bonus) - Number(b.bonus),
       },
       {
         title: '總年薪(多萬) 分紅+年終+底薪',
@@ -133,28 +133,28 @@ export default React.memo(function DataTable({
         dataIndex: 'averageTimePeerDay',
         key: 'averageTimePeerDay',
         width: 100,
-        sorter: true,
+        sorter: (a, b) => Number(a.averageTimePeerDay) - Number(b.averageTimePeerDay),
       },
       {
         title: '每月加班',
         dataIndex: 'overTimeEveryMonth',
         key: 'overTimeEveryMonth',
         width: 100,
-        sorter: true,
+        sorter: (a, b) => Number(a.overTimeEveryMonth) - Number(b.overTimeEveryMonth),
       },
       {
         title: '加班頻率',
         dataIndex: 'overtimeFrequency',
         key: 'overtimeFrequency',
         width: 100,
-        sorter: true,
+        sorter: (a, b) => Number(a.overtimeFrequency) - Number(b.overtimeFrequency),
       },
       {
         title: '爽度(1~5) 5最爽',
         dataIndex: 'happy',
         key: 'happy',
         width: 100,
-        sorter: true,
+        sorter: (a, b) => Number(a.happy) - Number(b.happy),
         render: (_, { happy }) => {
           let color = Number(happy) === 1 ? 'red' : Number(happy) < 4 ? 'yellow' : 'green'
           return <Tag color={color}>{happy}</Tag>
@@ -165,7 +165,7 @@ export default React.memo(function DataTable({
         dataIndex: 'loading',
         key: 'loading',
         width: 100,
-        sorter: true,
+        sorter: (a, b) => Number(a.loading) - Number(b.loading),
         render: (_, { loading }) => {
           let color = Number(loading) === 5 ? 'red' : Number(loading) > 3 ? 'yellow' : 'green'
           return <Tag color={color}>{loading}</Tag>
