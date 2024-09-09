@@ -34,9 +34,11 @@ export const useGoogleApi = () => {
     new Promise((res, rej) => {
       try {
         gapi.load('client', function () {
+          const key = import.meta.env.VITE_API_KEY
+          console.log(key)
           gapi.client
             .init({
-              apiKey: 'AIzaSyA8t-hUZ5R1OHDbUoVpt55lxWq9uh1Yq9Q',
+              apiKey: key,
               discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
             })
             .then((r) => {
