@@ -54,7 +54,7 @@ const App = () => {
     height: 'calc(100% - 64px)',
   }
   return (
-    <div className="scroll-container">
+    <div className="scroll-container h-full">
       <ConfigProvider
         theme={{
           // 1. Use dark algorithm

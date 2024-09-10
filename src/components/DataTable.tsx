@@ -211,7 +211,7 @@ export default React.memo(function DataTable({
       virtual
       bordered
       loading={dataLoading}
-      className="w-full h-full overflow-auto"
+      className="w-full h-full"
       columns={columns}
       dataSource={dataForTransfer}
       rowKey={'index'}
