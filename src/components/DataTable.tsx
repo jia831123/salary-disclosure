@@ -1,10 +1,10 @@
 import type { TableProps } from 'antd'
 import { SalaryData } from '../hooks/useGoogleAPI'
-import { Table, Tag } from 'antd'
+import { Button, Table, Tag } from 'antd'
 import { useContext, useMemo, useRef } from 'react'
 import { useDataTransfer } from '../hooks/useDataTransfer'
 import React from 'react'
-import { convertToDateFormat, get104Href } from '../uitls'
+import { convertToDateFormat, get104Href, getQollieHref } from '../uitls'
 import { FilterConfig } from '../type'
 import { MdContext } from '../App'
 
@@ -62,9 +62,26 @@ export default React.memo(function DataTable({
         className: 'bg-red',
         render: (_, { companyName }) => {
           return (
-            <a href={get104Href(companyName)} target="_blank">
-              {companyName}
-            </a>
+            <div>
+              <div>{companyName}</div>
+              <div className="flex justify-center">
+                <Button
+                  type="text"
+                  href={get104Href(companyName)}
+                  target="_blank"
+                  size="small"
+                  shape="circle"
+                  children={<img height={'20px'} width={'20px'} src="../public/104.ico" />}
+                />
+                <Button
+                  href={getQollieHref(companyName)}
+                  size="small"
+                  target="_blank"
+                  shape="circle"
+                  children={<img height={'16px'} width={'16px'} src="../public/qollie.ico" />}
+                />
+              </div>
+            </div>
           )
         },
       },
@@ -185,7 +202,7 @@ export default React.memo(function DataTable({
       .filter((each) => {
         return config.cols.concat(['companyName', 'timeState']).includes(each.key as string)
       })
-      .filter((e) => !md && e.key !== 'timeState')
+      .filter((e) => (!md ? !md && e.key !== 'timeState' : true))
   }, [config])
   console.log('Table Render')
   return (

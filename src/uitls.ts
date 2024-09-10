@@ -34,5 +34,8 @@ export function convertToDateFormat(dateStr: string): string {
   return formattedDate
 }
 export function get104Href(keyword: string) {
-  return `https://www.104.com.tw/company/search/?jobsource=cs_n104bank2&keyword=${keyword}`
+  return `https://www.104.com.tw/company/search/?jobsource=cs_n104bank2&keyword=${encodeURIComponent(keyword)}`
+}
+export function getQollieHref(keyword: string) {
+  return `https://www.qollie.com/search?keyword=${encodeURIComponent(keyword)}&kind=company&from=normal`
 }

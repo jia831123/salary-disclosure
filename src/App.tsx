@@ -4,7 +4,7 @@ import './App.css'
 import './index.css'
 import useGoogleApi from './hooks/useGoogleAPI'
 import DataTable from './components/DataTable'
-import { Button, Drawer, Flex, Layout } from 'antd'
+import { Button, ConfigProvider, Drawer, Flex, Layout, theme } from 'antd'
 import { DataTabs } from './components/DataTabs'
 import { useConfigService } from './server/localStorage/useConfigService'
 import { useDataMemo } from './hooks/useDataMemo'
@@ -31,7 +31,7 @@ const App = () => {
     textAlign: 'center',
     color: '#fff',
     height: 64,
-    backgroundColor: '#4096ff',
+    backgroundColor: 'black',
     padding: '0px',
   }
 
@@ -43,7 +43,7 @@ const App = () => {
     textAlign: 'center',
     lineHeight: '120px',
     color: '#fff',
-    backgroundColor: 'rgb(255, 255, 255)',
+    backgroundColor: 'black',
   }
 
   const layoutStyle = {
@@ -55,37 +55,52 @@ const App = () => {
   }
   return (
     <div className="scroll-container">
-      <MdContext.Provider value={md}>
-        <Header style={headerStyle}>
-          <Flex align="center" gap={'3rem'}>
-            {!md && (
-              <Button className="m-1" onClick={() => setShowDrawer(true)} ghost icon={<AlignCenterOutlined />}></Button>
+      <ConfigProvider
+        theme={{
+          // 1. Use dark algorithm
+          algorithm: theme.darkAlgorithm,
+
+          // 2. Combine dark algorithm and compact algorithm
+          // algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],
+        }}
+      >
+        <MdContext.Provider value={md}>
+          <Header style={headerStyle}>
+            <Flex align="center" gap={'3rem'}>
+              {!md && (
+                <Button
+                  className="m-1"
+                  onClick={() => setShowDrawer(true)}
+                  ghost
+                  icon={<AlignCenterOutlined />}
+                ></Button>
+              )}
+              <div className="grow">
+                純軟薪水分享 加強版
+                <a
+                  target="_blank"
+                  href="https://docs.google.com/spreadsheets/d/1GMYKVBxRlMv6oNVNzpXYoLUSyT8ZnLEjGcRbn0b4KsA/edit?gid=788239997#gid=788239997"
+                >
+                  (資料來源)
+                </a>
+              </div>
+            </Flex>
+          </Header>
+          <Layout style={layoutStyle}>
+            {md && (
+              <Sider width="25%" style={siderStyle}>
+                <DataTabs configs={configs} updateConfigs={updateConfigs}></DataTabs>
+              </Sider>
             )}
-            <div className="grow">
-              純軟薪水分享 加強版
-              <a
-                target="_blank"
-                href="https://docs.google.com/spreadsheets/d/1GMYKVBxRlMv6oNVNzpXYoLUSyT8ZnLEjGcRbn0b4KsA/edit?gid=788239997#gid=788239997"
-              >
-                (資料來源)
-              </a>
-            </div>
-          </Flex>
-        </Header>
-        <Layout style={layoutStyle}>
-          {md && (
-            <Sider width="25%" style={siderStyle}>
-              <DataTabs configs={configs} updateConfigs={updateConfigs}></DataTabs>
-            </Sider>
-          )}
-          <Content style={contentStyle}>
-            <DataTable data={dataMemo} dataLoading={isLoading} config={configs[0]}></DataTable>
-          </Content>
-        </Layout>
-        <Drawer placement="left" onClose={() => setShowDrawer(false)} open={isShowDrawer}>
-          <DataTabs configs={configs} updateConfigs={updateConfigs}></DataTabs>
-        </Drawer>
-      </MdContext.Provider>
+            <Content style={contentStyle}>
+              <DataTable data={dataMemo} dataLoading={isLoading} config={configs[0]}></DataTable>
+            </Content>
+          </Layout>
+          <Drawer placement="left" onClose={() => setShowDrawer(false)} open={isShowDrawer}>
+            <DataTabs configs={configs} updateConfigs={updateConfigs}></DataTabs>
+          </Drawer>
+        </MdContext.Provider>
+      </ConfigProvider>
     </div>
   )
 }
