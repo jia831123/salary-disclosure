@@ -71,14 +71,14 @@ export default React.memo(function DataTable({
                   target="_blank"
                   size="small"
                   shape="circle"
-                  children={<img height={'20px'} width={'20px'} src="../public/104.ico" />}
+                  children={<img height={'20px'} width={'20px'} src="/104.ico" />}
                 />
                 <Button
                   href={getQollieHref(companyName)}
                   size="small"
                   target="_blank"
                   shape="circle"
-                  children={<img height={'16px'} width={'16px'} src="../public/qollie.ico" />}
+                  children={<img height={'16px'} width={'16px'} src="/qollie.ico" />}
                 />
               </div>
             </div>
