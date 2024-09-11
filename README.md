@@ -22,6 +22,12 @@ This app is a simple  application that only used frontend to build,and data  fro
 # Disclaimer
 This work is for academic and research purposes only. The developer assumes no responsibility for the accuracy, reliability, completeness, legality, or any consequences arising from the content of the information
 
+# Get Start
+1. clone project
+2. add .env file in project
+3. add VITE_API_KEY=YOUR_GOOGLE_API_KEY to .env file
+4. npm run dev
+
 
 
 
